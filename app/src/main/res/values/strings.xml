@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Photos</string>
+    <string name="photo_transition">photo_transition</string>
+</resources>
