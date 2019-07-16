@@ -25,7 +25,7 @@ fun createHeaderInterceptor(): Interceptor {
         val builder = original.newBuilder()
         builder.apply {
             addHeader("Accept-Version", "v1")
-            addHeader("Authorization", "Client-ID 165d358f7abc1b30c5df083f78ad8148e4d99829f810e1886e129b314414b1a5")
+            addHeader("Authorization", "Client-ID 5fe66adbcb966a5c1e813074b67f364731f8d07f752f9a95b0ef52761be59fe2")
         }
         return@Interceptor it.proceed(builder.build())
     }

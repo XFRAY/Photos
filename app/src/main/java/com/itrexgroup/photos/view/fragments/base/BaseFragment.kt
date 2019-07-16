@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.itrexgroup.photos.view.activities.Router
 
 abstract class BaseFragment : Fragment() {
@@ -24,6 +25,12 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected abstract fun getLayoutResourceId(): Int
+
+    protected fun showSnackBar(message: String) {
+        view?.let {
+            Snackbar.make(it, message, Snackbar.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onDetach() {
         super.onDetach()
