@@ -1,5 +1,6 @@
 package com.itrexgroup.photos.koin
 
+import com.itrexgroup.photos.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -9,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 fun createRetrofit(okHttpClient: OkHttpClient): Retrofit =
     Retrofit.Builder()
-        .baseUrl("https://api.unsplash.com/")
+        .baseUrl(BuildConfig.UNSPLASH_API_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(okHttpClient)
@@ -25,7 +26,7 @@ fun createHeaderInterceptor(): Interceptor {
         val builder = original.newBuilder()
         builder.apply {
             addHeader("Accept-Version", "v1")
-            addHeader("Authorization", "Client-ID 5fe66adbcb966a5c1e813074b67f364731f8d07f752f9a95b0ef52761be59fe2")
+            addHeader("Authorization", "Client-ID " + BuildConfig.UNSPLASH_CLIENT_ID)
         }
         return@Interceptor it.proceed(builder.build())
     }

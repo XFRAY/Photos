@@ -5,8 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.transition.TransitionInflater
 import com.itrexgroup.photos.R
-import com.itrexgroup.photos.view.fragments.LoginFragment
-import com.itrexgroup.photos.view.fragments.PhotosFragment
+import com.itrexgroup.photos.view.fragments.WelcomeFragment
 import com.itrexgroup.photos.view.fragments.base.BaseFragment
 
 
@@ -16,7 +15,7 @@ class MainActivity : AppCompatActivity(), Router {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
-            navigateTo(LoginFragment.newInstance(), LoginFragment.TAG, null)
+            navigateTo(WelcomeFragment.newInstance(), WelcomeFragment.TAG, null)
         }
     }
 

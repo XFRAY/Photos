@@ -2,40 +2,56 @@ package com.itrexgroup.photos.view.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.itrexgroup.photos.BuildConfig
 import com.itrexgroup.photos.R
 import com.itrexgroup.photos.view.fragments.base.BaseFragment
+import com.itrexgroup.photos.vm.base.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
-import java.util.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : BaseFragment() {
 
     companion object {
+        private const val URL = "https://unsplash.com/oauth/authorize?client_id=" + BuildConfig.UNSPLASH_CLIENT_ID +
+                "&response_type=code&scope=public+read_user&redirect_uri=" + BuildConfig.UNSPLASH_REDIRECT_URI
+
         const val TAG = "LOGIN_FRAGMENT_TAG"
         fun newInstance() = LoginFragment()
     }
 
-    override fun getLayoutResourceId(): Int = R.layout.fragment_login
+    private val viewModel by viewModel<LoginViewModel>()
+
+    override fun getLayoutResourceId() = R.layout.fragment_login
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupClickListeners()
-        val postData =
-            "client_id=5fe66adbcb966a5c1e813074b67f364731f8d07f752f9a95b0ef52761be59fe2&client_secret=f0561de0466f105045a4fd455224ba87a77d76e3b8b9a7278ee7b8f91966aee7&redirect_uri=https://lolkek.com&code=123&grant_type=authorization_code"
-        webView.postUrl("https://unsplash.com/token", postData.toByteArray())
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                val url = view?.url
-                return super.shouldOverrideUrlLoading(view, request)
-            }
+        webView.webViewClient = webViewClient
+        webView.loadUrl(URL)
+    }
+
+    private val webViewClient = object : WebViewClient() {
+        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+            url?.let {
+                handleCode(url)
+            } ?: handleError()
+            return super.shouldOverrideUrlLoading(view, url)
         }
     }
 
-    private fun setupClickListeners() {
-        btnLogin.setOnClickListener {
-            router?.navigateTo(PhotosFragment.newInstance(), PhotosFragment.TAG, null)
+    private fun handleCode(url: String) {
+        if (url.contains("code=")) {
+            val startIndex = url.lastIndexOf("=")
+            val endIndex = url.length
+            val code = url.substring(startIndex, endIndex)
+            viewModel.login(code)
+        } else {
+            handleError()
         }
+    }
+
+    private fun handleError() {
+
     }
 }

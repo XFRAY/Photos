@@ -1,8 +1,10 @@
 package com.itrexgroup.photos.repository
 
-class UserRepositoryImpl: UserRepository {
+import com.itrexgroup.photos.model.ApiInterface
 
-    override fun login(email: String, password: String) {
+class UserRepositoryImpl(private val apiInterface: ApiInterface): UserRepository {
 
+    override fun login(code: String) {
+        apiInterface.loadPhoto()
     }
 }
