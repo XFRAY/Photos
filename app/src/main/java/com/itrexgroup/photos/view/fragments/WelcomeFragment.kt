@@ -5,6 +5,7 @@ import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.itrexgroup.photos.R
+import com.itrexgroup.photos.model.AnimationOptions
 import com.itrexgroup.photos.view.fragments.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_welcome.*
 
@@ -24,7 +25,9 @@ class WelcomeFragment : BaseFragment() {
 
     private fun setupClickListeners() {
         btnLogin.setOnClickListener {
-            router?.navigateTo(LoginFragment.newInstance(), LoginFragment.TAG, "login")
+            val animationOptions =
+                AnimationOptions(R.anim.slide_in_left, R.anim.slide_out_right, 0, R.anim.slide_out_right)
+            router?.navigateTo(LoginFragment.newInstance(), LoginFragment.TAG, "login", animationOptions)
         }
     }
 }

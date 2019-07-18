@@ -5,6 +5,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.transition.TransitionInflater
 import com.itrexgroup.photos.R
+import com.itrexgroup.photos.model.AnimationOptions
+import com.itrexgroup.photos.view.fragments.PhotosFragment
 import com.itrexgroup.photos.view.fragments.WelcomeFragment
 import com.itrexgroup.photos.view.fragments.base.BaseFragment
 
@@ -15,18 +17,32 @@ class MainActivity : AppCompatActivity(), Router {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
-            navigateTo(WelcomeFragment.newInstance(), WelcomeFragment.TAG, null)
+            navigateTo(PhotosFragment.newInstance(), PhotosFragment.TAG, null, null)
         }
     }
 
-    override fun navigateTo(fragment: BaseFragment, tag: String, backStackName: String?) {
+    override fun navigateTo(
+        fragment: BaseFragment,
+        tag: String,
+        backStackName: String?,
+        animationOptions: AnimationOptions?
+    ) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         val oldFragment = supportFragmentManager.findFragmentByTag(tag) as? BaseFragment?
+        animationOptions?.let {
+            fragmentTransaction.setCustomAnimations(
+                animationOptions.enterAnimation,
+                animationOptions.exitAnimation,
+                animationOptions.popEnterAnimation,
+                animationOptions.popExitAnimation
+            )
+        }
         if (oldFragment == null) {
             fragmentTransaction.replace(R.id.fragmentContainer, fragment, null)
         } else {
             fragmentTransaction.replace(R.id.fragmentContainer, oldFragment)
         }
+
         backStackName?.let {
             fragmentTransaction.addToBackStack(backStackName)
         }
@@ -43,15 +59,15 @@ class MainActivity : AppCompatActivity(), Router {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
         currentFragment?.let {
             it.sharedElementReturnTransition =
-                    TransitionInflater.from(this).inflateTransition(R.transition.photo_transition)
+                TransitionInflater.from(this).inflateTransition(R.transition.photo_transition)
             it.exitTransition = TransitionInflater.from(this)
-                    .inflateTransition(android.R.transition.no_transition)
+                .inflateTransition(android.R.transition.no_transition)
         }
 
         fragment.sharedElementEnterTransition = TransitionInflater.from(this)
-                .inflateTransition(R.transition.photo_transition)
+            .inflateTransition(R.transition.photo_transition)
         fragment.enterTransition = TransitionInflater.from(this)
-                .inflateTransition(android.R.transition.no_transition)
+            .inflateTransition(android.R.transition.no_transition)
 
         fragmentTransaction.addSharedElement(view, view.transitionName)
         fragmentTransaction.commit()

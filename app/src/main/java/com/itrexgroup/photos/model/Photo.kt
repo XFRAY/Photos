@@ -9,5 +9,6 @@ data class Photo(
         val color: String,
         val likes: Int,
         val urls: Urls,
-        val user: User
+        @SerializedName("user")
+        val author: Author
 )

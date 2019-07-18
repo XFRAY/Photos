@@ -12,26 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtAuthor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/background_corners_dp_black_transparent"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="@id/imgPhoto"
-            app:layout_constraintEnd_toEndOf="@id/imgPhoto" />
-
         <View
             android:id="@+id/gradient"
             android:layout_width="match_parent"
@@ -40,7 +20,37 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imgPhoto" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgProfilePhoto"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="@id/imgProfilePhoto"
+            app:layout_constraintStart_toEndOf="@id/imgProfilePhoto"
+            app:layout_constraintTop_toTopOf="@id/imgProfilePhoto" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgProfilePhoto" />
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtLikes"
@@ -49,7 +59,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:drawableStart="@drawable/ic_favorite_red"
+            android:drawableStart="@drawable/ic_like_empty_black"
             android:drawablePadding="6dp"
             android:gravity="center_vertical"
             android:textColor="@color/colorWhite"

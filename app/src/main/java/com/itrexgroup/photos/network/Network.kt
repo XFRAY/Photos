@@ -1,4 +1,4 @@
-package com.itrexgroup.photos.koin
+package com.itrexgroup.photos.network
 
 import com.itrexgroup.photos.BuildConfig
 import okhttp3.Interceptor

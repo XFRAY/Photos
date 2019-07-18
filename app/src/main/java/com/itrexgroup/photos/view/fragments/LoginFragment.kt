@@ -2,12 +2,13 @@ package com.itrexgroup.photos.view.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.itrexgroup.photos.BuildConfig
 import com.itrexgroup.photos.R
 import com.itrexgroup.photos.view.fragments.base.BaseFragment
-import com.itrexgroup.photos.vm.base.LoginViewModel
+import com.itrexgroup.photos.vm.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,7 +22,7 @@ class LoginFragment : BaseFragment() {
         fun newInstance() = LoginFragment()
     }
 
-    private val viewModel by viewModel<LoginViewModel>()
+    private val viewModel: LoginViewModel by viewModel()
 
     override fun getLayoutResourceId() = R.layout.fragment_login
 
@@ -33,25 +34,15 @@ class LoginFragment : BaseFragment() {
 
     private val webViewClient = object : WebViewClient() {
         override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-            url?.let {
-                handleCode(url)
-            } ?: handleError()
+            viewModel.handleCodeFromUrlAndLogin(url)
             return super.shouldOverrideUrlLoading(view, url)
         }
-    }
 
-    private fun handleCode(url: String) {
-        if (url.contains("code=")) {
-            val startIndex = url.lastIndexOf("=")
-            val endIndex = url.length
-            val code = url.substring(startIndex, endIndex)
-            viewModel.login(code)
-        } else {
-            handleError()
+        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+            request?.let {
+                viewModel.handleCodeFromUrlAndLogin(it.url.toString())
+            }
+            return super.shouldOverrideUrlLoading(view, request)
         }
-    }
-
-    private fun handleError() {
-
     }
 }

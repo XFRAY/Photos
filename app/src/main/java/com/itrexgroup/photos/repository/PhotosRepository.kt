@@ -5,6 +5,6 @@ import io.reactivex.Single
 
 interface PhotosRepository {
 
-    fun loadPhotos(): Single<List<Photo>>
+    fun loadPhotos(page: Int): Single<List<Photo>>
 
 }

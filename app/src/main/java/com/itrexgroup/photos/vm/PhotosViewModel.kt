@@ -14,23 +14,45 @@ class PhotosViewModel(
 
     private val compositeDisposable = CompositeDisposable()
 
-    var recyclerViewPosition = 0
-
     val listPhotosLiveData = MutableLiveData<List<Photo>>()
     val progressLiveData = MutableLiveData<Boolean>()
 
-    fun loadPhotos() {
-        if (listPhotosLiveData.value != null) {
+    private val listOfPhotos = ArrayList<Photo>()
+    private var currentPage = 1
+    private var isLoad = false
+
+    fun loadFirstPagePhotos() {
+        if (isLoad) {
             return
+        }
+        if (listOfPhotos.isNotEmpty()) {
+            listPhotosLiveData.value = listOfPhotos
         }
         progressLiveData.value = true
         compositeDisposable.add(
-            photosRepository.loadPhotos()
+            photosRepository.loadPhotos(currentPage)
                 .subscribe({
-                    listPhotosLiveData.value = it
+                    listOfPhotos.addAll(it)
+                    listPhotosLiveData.value = listOfPhotos
                     progressLiveData.value = false
                 }, {
                     progressLiveData.value = false
+                })
+        )
+    }
+
+    fun loadNextPagePhotosIfExists() {
+        if (isLoad) {
+            return
+        }
+        currentPage++
+        compositeDisposable.add(
+            photosRepository.loadPhotos(currentPage)
+                .subscribe({
+                    listOfPhotos.addAll(it)
+                    listPhotosLiveData.value = listOfPhotos
+                }, {
+
                 })
         )
     }
