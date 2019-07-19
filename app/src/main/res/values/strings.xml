@@ -7,4 +7,6 @@
     <string name="email_address">Email Address</string>
     <string name="sign_in">Sign In</string>
     <string name="we_hope_you_enjoy_the_stay">We hope you enjoy the stay!</string>
+    <string name="photos">Photos</string>
+    <string name="profile">Profile</string>
 </resources>

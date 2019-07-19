@@ -1,4 +1,4 @@
-package com.itrexgroup.photos.model
+package com.itrexgroup.photos.entity.photos
 
 data class Urls(
     val raw: String,

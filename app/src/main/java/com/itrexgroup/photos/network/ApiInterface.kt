@@ -1,7 +1,7 @@
 package com.itrexgroup.photos.network
 
 import com.itrexgroup.photos.model.LoginResponse
-import com.itrexgroup.photos.model.Photo
+import com.itrexgroup.photos.entity.photos.Photo
 import io.reactivex.Single
 import retrofit2.http.*
 

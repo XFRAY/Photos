@@ -1,6 +1,6 @@
 package com.itrexgroup.photos.repository
 
-import com.itrexgroup.photos.model.Photo
+import com.itrexgroup.photos.entity.photos.Photo
 import io.reactivex.Single
 
 interface PhotosRepository {

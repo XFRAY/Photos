@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.itrexgroup.photos.R
-import com.itrexgroup.photos.model.Photo
+import com.itrexgroup.photos.entity.photos.Photo
 import com.itrexgroup.photos.utils.TimeUtils
 import com.itrexgroup.photos.utils.inflate
 

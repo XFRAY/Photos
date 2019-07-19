@@ -1,4 +1,4 @@
-package com.itrexgroup.photos.model
+package com.itrexgroup.photos.entity.photos
 
 import com.google.gson.annotations.SerializedName
 

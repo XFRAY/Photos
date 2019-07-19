@@ -1,9 +1,9 @@
 package com.itrexgroup.photos
 
 import android.app.Application
-import com.itrexgroup.photos.koin.networkModule
-import com.itrexgroup.photos.koin.repositoryModule
-import com.itrexgroup.photos.koin.viewModelModule
+import com.itrexgroup.photos.di.networkModule
+import com.itrexgroup.photos.di.repositoryModule
+import com.itrexgroup.photos.di.viewModelModule
 import org.koin.android.ext.android.startKoin
 
 class App : Application() {

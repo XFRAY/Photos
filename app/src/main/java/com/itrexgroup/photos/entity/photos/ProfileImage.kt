@@ -1,4 +1,4 @@
-package com.itrexgroup.photos.model
+package com.itrexgroup.photos.entity.photos
 
 class ProfileImage(val small: String,
                    val medium: String,
