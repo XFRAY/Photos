@@ -6,7 +6,13 @@
         android:icon="@drawable/ic_photo_collections"
         android:title="@string/photos" />
 
+    <item android:id="@+id/likedPhotos"
+          android:title="@string/liked"
+          android:icon="@drawable/ic_like_fill_red"/>
+
     <item android:id="@+id/profile"
         android:title="@string/profile"
         android:icon="@drawable/ic_account_circle"/>
+
+
 </menu>

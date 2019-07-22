@@ -18,8 +18,8 @@ class MainFlowFragment : BaseFragment(), OnBackPressed {
         const val TAG = "MAIN_FLOW_FRAGMENT_TAG"
         fun newInstance() = MainFlowFragment()
 
-        const val SAVED_STATE_CONTAINER_KEY = "ContainerKey"
-        const val SAVED_STATE_CURRENT_TAB_KEY = "CurrentTabKey"
+        private const val SAVED_STATE_CONTAINER_KEY = "ContainerKey"
+        private const val SAVED_STATE_CURRENT_TAB_KEY = "CurrentTabKey"
     }
 
     override fun getLayoutResourceId() = R.layout.fragment_main_flow
@@ -49,6 +49,11 @@ class MainFlowFragment : BaseFragment(), OnBackPressed {
                     tag = PhotosFragment.TAG
                 }
 
+                R.id.likedPhotos -> {
+                    fragment = LikedPhotosFragment.newInstance()
+                    tag = LikedPhotosFragment.TAG
+                }
+
                 R.id.profile -> {
                     fragment = ProfileFragment.newInstance()
                     tag = ProfileFragment.TAG
@@ -68,13 +73,13 @@ class MainFlowFragment : BaseFragment(), OnBackPressed {
         val oldFragment = childFragmentManager.findFragmentByTag(tag) as BaseFragment?
 
         if (oldFragment == null) {
-            savedFragmentState(itemId)
-            fragment.setInitialSavedState(savedStateSparseArray[itemId])
+         //   savedFragmentState(itemId)
+          //  fragment.setInitialSavedState(savedStateSparseArray[itemId])
             fragmentTransaction.replace(R.id.childFragmentContainer, fragment, tag)
+            fragmentTransaction.addToBackStack("stack")
         } else {
             fragmentTransaction.replace(R.id.childFragmentContainer, oldFragment)
         }
-        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
 

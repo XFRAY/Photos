@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatEditText
         android:layout_width="match_parent"
-        android:text="text"
+        android:id="@+id/edtName"
         android:layout_height="match_parent" />
 
 </LinearLayout>
