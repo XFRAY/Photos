@@ -1,42 +1,33 @@
 package com.itrexgroup.photos.view.fragments
 
 import android.os.Bundle
-import android.util.SparseArray
 import android.view.View
 import androidx.annotation.IdRes
 import com.itrexgroup.photos.R
 import com.itrexgroup.photos.view.fragments.base.BaseFragment
 import com.itrexgroup.photos.view.fragments.base.OnBackPressed
+import com.itrexgroup.photos.vm.MainFlowViewModel
 import kotlinx.android.synthetic.main.fragment_main_flow.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class MainFlowFragment : BaseFragment(), OnBackPressed {
 
-    private var savedStateSparseArray = SparseArray<SavedState>()
-    private var currentSelectItemId = R.id.photos
+    private val viewModel: MainFlowViewModel by viewModel()
 
     companion object {
         const val TAG = "MAIN_FLOW_FRAGMENT_TAG"
         fun newInstance() = MainFlowFragment()
-
-        private const val SAVED_STATE_CONTAINER_KEY = "ContainerKey"
-        private const val SAVED_STATE_CURRENT_TAB_KEY = "CurrentTabKey"
     }
 
     override fun getLayoutResourceId() = R.layout.fragment_main_flow
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        savedInstanceState?.let {
-            savedStateSparseArray = it.getSparseParcelableArray(SAVED_STATE_CONTAINER_KEY)
-            currentSelectItemId = it.getInt(SAVED_STATE_CURRENT_TAB_KEY)
+        if (savedInstanceState == null) {
+            viewModel.activeFragmentTag = PhotosFragment.TAG
         }
         setupBottomNavigationView()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putSparseParcelableArray(SAVED_STATE_CONTAINER_KEY, savedStateSparseArray)
-        outState.putInt(SAVED_STATE_CURRENT_TAB_KEY, currentSelectItemId)
     }
 
     private fun setupBottomNavigationView() {
@@ -66,42 +57,50 @@ class MainFlowFragment : BaseFragment(), OnBackPressed {
             replaceFragment(fragment, tag, it.itemId)
             return@setOnNavigationItemSelectedListener true
         }
+        if (viewModel.isListItemsEmpty()) {
+            bottomNavigationView.selectedItemId = R.id.photos
+        }
+
+        bottomNavigationView.setOnNavigationItemReselectedListener {
+
+        }
+
     }
 
     private fun replaceFragment(fragment: BaseFragment, tag: String, @IdRes itemId: Int) {
-        val fragmentTransaction = childFragmentManager.beginTransaction()
-        val oldFragment = childFragmentManager.findFragmentByTag(tag) as BaseFragment?
-
-        if (oldFragment == null) {
-         //   savedFragmentState(itemId)
-          //  fragment.setInitialSavedState(savedStateSparseArray[itemId])
-            fragmentTransaction.replace(R.id.childFragmentContainer, fragment, tag)
-            fragmentTransaction.addToBackStack("stack")
+        val fragmentTransition = childFragmentManager.beginTransaction()
+        val activeFragment = childFragmentManager.findFragmentByTag(viewModel.activeFragmentTag) as BaseFragment?
+        if (activeFragment == null) {
+            fragmentTransition.add(R.id.childFragmentContainer, fragment, tag)
         } else {
-            fragmentTransaction.replace(R.id.childFragmentContainer, oldFragment)
-        }
-        fragmentTransaction.commit()
-    }
+            val oldFragment = childFragmentManager.findFragmentByTag(tag) as BaseFragment?
+            if (oldFragment == null) {
+                fragmentTransition.add(R.id.childFragmentContainer, fragment, tag).hide(activeFragment)
+            } else {
+                fragmentTransition.hide(activeFragment).show(oldFragment)
+                viewModel.removeItem(itemId)
+            }
 
-    private fun savedFragmentState(actionId: Int) {
-        val currentFragment = childFragmentManager.findFragmentById(R.id.childFragmentContainer)
-        currentFragment?.let {
-            savedStateSparseArray.put(currentSelectItemId, childFragmentManager.saveFragmentInstanceState(it))
         }
-        currentSelectItemId = actionId
+        fragmentTransition.commit()
+        viewModel.activeFragmentTag = tag
+        viewModel.addItem(itemId)
+
     }
 
     override fun onBackPressed(): Boolean {
-        childFragmentManager.fragments.forEach { fragment ->
-            if (fragment != null && fragment.isVisible) {
-                with(fragment.childFragmentManager) {
-                    if (backStackEntryCount > 0) {
-                        popBackStack()
-                        return@with
-                    }
-                }
+        if (!viewModel.isListItemsEmpty()) {
+            viewModel.removeLast()
+            if (viewModel.isListItemsEmpty()) {
+                return false
             }
+            val fragment = childFragmentManager.findFragmentByTag(viewModel.activeFragmentTag) as BaseFragment?
+            fragment?.let {
+                childFragmentManager.beginTransaction().remove(fragment).commit()
+            }
+            bottomNavigationView.selectedItemId = viewModel.getLastItem()
+            return true
         }
-        return true
+        return false
     }
 }

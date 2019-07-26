@@ -6,6 +6,7 @@ import com.itrexgroup.photos.repository.PhotosRepositoryImpl
 import com.itrexgroup.photos.repository.UserRepository
 import com.itrexgroup.photos.repository.UserRepositoryImpl
 import com.itrexgroup.photos.vm.LoginViewModel
+import com.itrexgroup.photos.vm.MainFlowViewModel
 import com.itrexgroup.photos.vm.PhotosViewModel
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
@@ -21,6 +22,7 @@ val networkModule = module {
 val viewModelModule = module {
     viewModel { PhotosViewModel(get(), get()) }
     viewModel { LoginViewModel(get(), get()) }
+    viewModel { MainFlowViewModel(get()) }
 }
 
 val repositoryModule = module {
