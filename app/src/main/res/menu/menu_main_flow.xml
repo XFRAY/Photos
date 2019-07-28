@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/photos"
-        android:icon="@drawable/ic_photo_collections"
+        android:icon="@drawable/ic_photos_black"
         android:title="@string/photos" />
 
     <item android:id="@+id/likedPhotos"

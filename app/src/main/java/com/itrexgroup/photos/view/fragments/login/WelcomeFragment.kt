@@ -1,19 +1,27 @@
-package com.itrexgroup.photos.view.fragments
+package com.itrexgroup.photos.view.fragments.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import com.itrexgroup.photos.R
-import com.itrexgroup.photos.model.AnimationOptions
-import com.itrexgroup.photos.view.fragments.base.BaseFragment
+import com.itrexgroup.photos.view.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_welcome.*
+import java.lang.ClassCastException
 
 class WelcomeFragment : BaseFragment() {
 
     companion object {
         const val TAG = "WELCOME_FRAGMENT_TAG"
         fun newInstance() = WelcomeFragment()
+    }
+
+    private lateinit var parent: WelcomeFragmentParent
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (parentFragment as? WelcomeFragmentParent)?.let { it ->
+            parent = it
+        } ?: throw ClassCastException("$parentFragment should implement WelcomeFragmentParent")
     }
 
     override fun getLayoutResourceId(): Int = R.layout.fragment_welcome
@@ -25,9 +33,7 @@ class WelcomeFragment : BaseFragment() {
 
     private fun setupClickListeners() {
         btnLogin.setOnClickListener {
-            val animationOptions =
-                AnimationOptions(R.anim.slide_in_left, R.anim.slide_out_right, 0, R.anim.slide_out_right)
-            router?.navigateTo(LoginFragment.newInstance(), LoginFragment.TAG, "login", animationOptions)
+            parent.login()
         }
     }
 }

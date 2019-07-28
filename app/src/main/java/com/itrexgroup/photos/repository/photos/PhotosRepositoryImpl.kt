@@ -1,7 +1,8 @@
-package com.itrexgroup.photos.repository
+package com.itrexgroup.photos.repository.photos
 
 import com.itrexgroup.photos.network.ApiInterface
 import com.itrexgroup.photos.entity.photos.Photo
+import com.itrexgroup.photos.repository.photos.PhotosRepository
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

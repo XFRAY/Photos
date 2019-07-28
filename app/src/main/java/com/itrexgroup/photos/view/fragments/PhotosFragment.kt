@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.itrexgroup.photos.view.adapters.PhotosAdapter
-import com.itrexgroup.photos.view.fragments.base.BaseFragment
+import com.itrexgroup.photos.view.base.BaseFragment
 import com.itrexgroup.photos.vm.PhotosViewModel
 import kotlinx.android.synthetic.main.fragment_photos.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -59,12 +59,7 @@ class PhotosFragment : BaseFragment() {
     }
 
     private fun onItemClick(view: View, url: String, photoTransitionName: String) {
-        router?.navigateToWithViewTransition(
-            PhotoDetailsFragment.newInstance(url, photoTransitionName),
-            PhotoDetailsFragment.TAG,
-            view,
-            "123"
-        )
+
     }
 
 

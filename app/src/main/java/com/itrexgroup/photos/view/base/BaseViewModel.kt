@@ -1,4 +1,4 @@
-package com.itrexgroup.photos.vm.base
+package com.itrexgroup.photos.view.base
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

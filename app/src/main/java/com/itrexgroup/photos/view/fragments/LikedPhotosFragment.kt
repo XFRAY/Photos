@@ -3,7 +3,7 @@ package com.itrexgroup.photos.view.fragments
 import android.os.Bundle
 import android.view.View
 import com.itrexgroup.photos.R
-import com.itrexgroup.photos.view.fragments.base.BaseFragment
+import com.itrexgroup.photos.view.base.BaseFragment
 
 class LikedPhotosFragment : BaseFragment() {
 

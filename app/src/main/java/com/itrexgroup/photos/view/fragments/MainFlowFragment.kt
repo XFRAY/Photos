@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.IdRes
 import com.itrexgroup.photos.R
-import com.itrexgroup.photos.view.fragments.base.BaseFragment
-import com.itrexgroup.photos.view.fragments.base.OnBackPressed
+import com.itrexgroup.photos.view.base.BaseFragment
+import com.itrexgroup.photos.view.activities.OnBackPressed
 import com.itrexgroup.photos.vm.MainFlowViewModel
 import kotlinx.android.synthetic.main.fragment_main_flow.*
 import org.koin.androidx.viewmodel.ext.android.viewModel

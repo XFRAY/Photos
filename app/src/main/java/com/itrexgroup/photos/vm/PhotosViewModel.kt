@@ -3,8 +3,8 @@ package com.itrexgroup.photos.vm
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.itrexgroup.photos.entity.photos.Photo
-import com.itrexgroup.photos.repository.PhotosRepository
-import com.itrexgroup.photos.vm.base.BaseViewModel
+import com.itrexgroup.photos.repository.photos.PhotosRepository
+import com.itrexgroup.photos.view.base.BaseViewModel
 import io.reactivex.disposables.CompositeDisposable
 
 class PhotosViewModel(

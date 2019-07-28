@@ -1,4 +1,4 @@
-package com.itrexgroup.photos.view.fragments.base
+package com.itrexgroup.photos.view.activities
 
 interface OnBackPressed {
 

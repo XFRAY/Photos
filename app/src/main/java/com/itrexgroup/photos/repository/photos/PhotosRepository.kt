@@ -1,4 +1,4 @@
-package com.itrexgroup.photos.repository
+package com.itrexgroup.photos.repository.photos
 
 import com.itrexgroup.photos.entity.photos.Photo
 import io.reactivex.Single

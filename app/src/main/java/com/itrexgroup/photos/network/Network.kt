@@ -16,6 +16,19 @@ fun createRetrofit(okHttpClient: OkHttpClient): Retrofit =
         .client(okHttpClient)
         .build()
 
+fun createRetrofitForLogin(okHttpLoggingInterceptor: HttpLoggingInterceptor): Retrofit =
+    Retrofit.Builder()
+        .baseUrl(BuildConfig.UNSPLASH_LOGIN_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .client(
+            OkHttpClient.Builder()
+                .addInterceptor(okHttpLoggingInterceptor)
+                .build()
+        )
+        .build()
+
+
 fun createHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor()
     .setLevel(HttpLoggingInterceptor.Level.BODY)
 
@@ -26,7 +39,6 @@ fun createHeaderInterceptor(): Interceptor {
         val builder = original.newBuilder()
         builder.apply {
             addHeader("Accept-Version", "v1")
-            addHeader("Authorization", "Client-ID " + BuildConfig.UNSPLASH_CLIENT_ID)
         }
         return@Interceptor it.proceed(builder.build())
     }

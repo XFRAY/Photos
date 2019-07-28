@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.bumptech.glide.Glide
 import com.itrexgroup.photos.R
-import com.itrexgroup.photos.view.fragments.base.BaseFragment
+import com.itrexgroup.photos.view.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_photo_details.*
 
 class PhotoDetailsFragment : BaseFragment() {

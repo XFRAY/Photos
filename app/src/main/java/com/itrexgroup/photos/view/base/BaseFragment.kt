@@ -1,21 +1,21 @@
-package com.itrexgroup.photos.view.fragments.base
+package com.itrexgroup.photos.view.base
 
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import com.itrexgroup.photos.view.activities.Router
 
 abstract class BaseFragment : Fragment() {
 
-    protected var router: Router? = null
+    protected var router: BaseRouter? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (context as? Router)?.let {
+        (context as? BaseRouter)?.let {
             router = it
         } ?: throw ClassCastException("$context should implement Router")
     }
@@ -30,6 +30,10 @@ abstract class BaseFragment : Fragment() {
         view?.let {
             Snackbar.make(it, message, Snackbar.LENGTH_SHORT).show()
         }
+    }
+
+    protected fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDetach() {
