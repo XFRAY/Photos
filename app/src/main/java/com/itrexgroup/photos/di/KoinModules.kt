@@ -1,13 +1,15 @@
 package com.itrexgroup.photos.di
 
-import com.itrexgroup.photos.network.*
-import com.itrexgroup.photos.repository.photos.PhotosRepository
-import com.itrexgroup.photos.repository.photos.PhotosRepositoryImpl
-import com.itrexgroup.photos.repository.user.UserRepository
-import com.itrexgroup.photos.repository.user.UserRepositoryImpl
-import com.itrexgroup.photos.utils.PreferenceManager
-import com.itrexgroup.photos.view.activities.MainActivityViewModel
-import com.itrexgroup.photos.view.fragments.login.LoginViewModel
+import com.itrexgroup.photos.data.database.PhotosDatabase
+import com.itrexgroup.photos.data.network.*
+import com.itrexgroup.photos.data.repository.photos.PhotosRepository
+import com.itrexgroup.photos.data.repository.photos.PhotosRepositoryImpl
+import com.itrexgroup.photos.data.repository.user.UserRepository
+import com.itrexgroup.photos.data.repository.user.UserRepositoryImpl
+import com.itrexgroup.photos.data.repository.PreferenceManager
+import com.itrexgroup.photos.ui.activities.MainActivityViewModel
+import com.itrexgroup.photos.ui.fragments.login.LoginViewModel
+import com.itrexgroup.photos.ui.fragments.photos.PhotosViewModel
 import com.itrexgroup.photos.vm.*
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
@@ -30,10 +32,14 @@ val viewModelModule = module {
 }
 
 val repositoryModule = module {
-    single<PhotosRepository> { PhotosRepositoryImpl(get()) }
+    single<PhotosRepository> { PhotosRepositoryImpl(get(), get()) }
     single<UserRepository> { UserRepositoryImpl(get(), get(), get()) }
 }
 
 val utilsModule = module {
     single { PreferenceManager(get()) }
+}
+
+val databaseModule = module {
+    single { PhotosDatabase.createDatabase(get()) }
 }

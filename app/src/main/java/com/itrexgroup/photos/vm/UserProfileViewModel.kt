@@ -2,9 +2,9 @@ package com.itrexgroup.photos.vm
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.itrexgroup.photos.entity.user.User
-import com.itrexgroup.photos.repository.user.UserRepository
-import com.itrexgroup.photos.view.base.BaseViewModel
+import com.itrexgroup.photos.data.database.entity.user.User
+import com.itrexgroup.photos.data.repository.user.UserRepository
+import com.itrexgroup.photos.ui.base.BaseViewModel
 import io.reactivex.disposables.CompositeDisposable
 
 class UserProfileViewModel(application: Application,

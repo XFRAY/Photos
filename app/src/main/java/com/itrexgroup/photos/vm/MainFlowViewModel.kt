@@ -1,7 +1,7 @@
 package com.itrexgroup.photos.vm
 
 import android.app.Application
-import com.itrexgroup.photos.view.base.BaseViewModel
+import com.itrexgroup.photos.ui.base.BaseViewModel
 
 class MainFlowViewModel(application: Application) : BaseViewModel(application) {
 
