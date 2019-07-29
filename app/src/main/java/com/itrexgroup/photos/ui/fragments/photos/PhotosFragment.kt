@@ -37,30 +37,11 @@ class PhotosFragment : BaseFragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = PhotosAdapter(this::onItemClick)
+        adapter = PhotosAdapter()
         val layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val visibleItemCount = layoutManager.childCount
-                val totalItemCount = layoutManager.itemCount
-                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
-                    && firstVisibleItemPosition >= 0
-                    && totalItemCount >= PAGE_SIZE
-                ) {
-                    viewModel.loadNextPagePhotosIfExists()
-                }
-            }
-        })
     }
-
-    private fun onItemClick(view: View, url: String, photoTransitionName: String) {
-
-    }
-
 
     private fun observeViewModel() {
         viewModel.progressLiveData.observe(this, Observer {
@@ -68,7 +49,7 @@ class PhotosFragment : BaseFragment() {
         })
 
         viewModel.listPhotosLiveData.observe(this, Observer {
-            adapter.listPhotos = it
+            adapter.submitList(it)
         })
     }
 
