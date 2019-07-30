@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.itrexgroup.photos.ui.adapters.PhotosAdapter
 import com.itrexgroup.photos.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_photos.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import com.itrexgroup.photos.R
 
 
@@ -33,7 +31,7 @@ class PhotosFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        viewModel.loadFirstPagePhotos()
+       // viewModel.loadPhotos()
     }
 
     private fun setupRecyclerView() {
@@ -44,9 +42,9 @@ class PhotosFragment : BaseFragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.progressLiveData.observe(this, Observer {
+      /*  viewModel.progressLiveData.observe(this, Observer {
 
-        })
+        })*/
 
         viewModel.listPhotosLiveData.observe(this, Observer {
             adapter.submitList(it)
