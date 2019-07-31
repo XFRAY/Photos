@@ -1,4 +1,4 @@
-package com.itrexgroup.photos.ui.utils
+package com.itrexgroup.photos.utils
 
 import java.text.SimpleDateFormat
 import java.util.*

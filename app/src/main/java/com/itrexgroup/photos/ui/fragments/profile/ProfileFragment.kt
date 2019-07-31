@@ -1,4 +1,4 @@
-package com.itrexgroup.photos.ui.fragments
+package com.itrexgroup.photos.ui.fragments.profile
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import com.itrexgroup.photos.R
 import com.itrexgroup.photos.data.database.entity.user.User
 import com.itrexgroup.photos.ui.base.BaseFragment
-import com.itrexgroup.photos.vm.UserProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

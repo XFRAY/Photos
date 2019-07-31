@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.transition.TransitionInflater
 import com.itrexgroup.photos.R
-import com.itrexgroup.photos.ui.utils.AnimationOptions
-import com.itrexgroup.photos.ui.fragments.MainFlowFragment
+import com.itrexgroup.photos.utils.AnimationOptions
+import com.itrexgroup.photos.ui.fragments.main.MainFlowFragment
 import com.itrexgroup.photos.ui.base.BaseFragment
 import com.itrexgroup.photos.ui.base.OnBackPressed
 import com.itrexgroup.photos.ui.fragments.login.LoginFlowFragment

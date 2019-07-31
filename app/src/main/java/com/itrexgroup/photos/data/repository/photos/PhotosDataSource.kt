@@ -29,7 +29,7 @@ class PhotosDataSource(private val apiInterface: ApiInterface) : ItemKeyedDataSo
                 initialLoadStateLiveData.postValue(NetworkState.LOADED)
                 pageNumber++
             }, {
-                initialLoadStateLiveData.postValue(NetworkState(NetworkState.Status.FAILED, it.message))
+                initialLoadStateLiveData.postValue(NetworkState.FAILED)
             })
         compositeDisposable.add(disposable)
     }
@@ -52,7 +52,7 @@ class PhotosDataSource(private val apiInterface: ApiInterface) : ItemKeyedDataSo
                 paginatedNetworkStateLiveData.postValue(NetworkState.LOADED)
                 pageNumber++
             }, {
-                paginatedNetworkStateLiveData.postValue(NetworkState(NetworkState.Status.FAILED, it.message))
+                paginatedNetworkStateLiveData.postValue(NetworkState.FAILED)
             })
         compositeDisposable.add(disposable)
     }

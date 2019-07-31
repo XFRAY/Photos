@@ -1,4 +1,4 @@
-package com.itrexgroup.photos.vm
+package com.itrexgroup.photos.ui.fragments.profile
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData

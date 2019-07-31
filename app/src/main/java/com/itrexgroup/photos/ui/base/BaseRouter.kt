@@ -1,6 +1,6 @@
 package com.itrexgroup.photos.ui.base
 
-import com.itrexgroup.photos.ui.utils.AnimationOptions
+import com.itrexgroup.photos.utils.AnimationOptions
 
 interface BaseRouter {
 

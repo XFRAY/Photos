@@ -8,8 +8,9 @@ import com.itrexgroup.photos.data.repository.photos.PhotosDataSource
 import com.itrexgroup.photos.data.repository.photos.PhotosDataSourceFactory
 import com.itrexgroup.photos.ui.activities.MainActivityViewModel
 import com.itrexgroup.photos.ui.fragments.login.LoginViewModel
+import com.itrexgroup.photos.ui.fragments.main.MainFlowViewModel
 import com.itrexgroup.photos.ui.fragments.photos.PhotosViewModel
-import com.itrexgroup.photos.vm.*
+import com.itrexgroup.photos.ui.fragments.profile.UserProfileViewModel
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 

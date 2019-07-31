@@ -1,4 +1,4 @@
-package com.itrexgroup.photos.ui.fragments
+package com.itrexgroup.photos.ui.fragments.main
 
 import android.os.Bundle
 import android.view.View
@@ -6,8 +6,9 @@ import androidx.annotation.IdRes
 import com.itrexgroup.photos.R
 import com.itrexgroup.photos.ui.base.BaseFragment
 import com.itrexgroup.photos.ui.base.OnBackPressed
+import com.itrexgroup.photos.ui.fragments.LikedPhotosFragment
 import com.itrexgroup.photos.ui.fragments.photos.PhotosFragment
-import com.itrexgroup.photos.vm.MainFlowViewModel
+import com.itrexgroup.photos.ui.fragments.profile.ProfileFragment
 import kotlinx.android.synthetic.main.fragment_main_flow.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

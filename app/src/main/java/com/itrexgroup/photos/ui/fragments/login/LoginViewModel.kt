@@ -1,7 +1,7 @@
 package com.itrexgroup.photos.ui.fragments.login
 
 import android.app.Application
-import com.itrexgroup.photos.ui.utils.SingleLiveEvent
+import com.itrexgroup.photos.utils.SingleLiveEvent
 import com.itrexgroup.photos.data.repository.user.UserRepository
 import com.itrexgroup.photos.data.repository.PreferenceManager
 import com.itrexgroup.photos.ui.base.BaseViewModel

@@ -1,4 +1,4 @@
-package com.itrexgroup.photos.vm
+package com.itrexgroup.photos.ui.fragments.main
 
 import android.app.Application
 import com.itrexgroup.photos.ui.base.BaseViewModel

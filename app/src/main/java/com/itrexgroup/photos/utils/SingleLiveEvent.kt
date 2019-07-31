@@ -1,4 +1,4 @@
-package com.itrexgroup.photos.ui.utils
+package com.itrexgroup.photos.utils
 
 import androidx.annotation.MainThread
 import androidx.annotation.Nullable
