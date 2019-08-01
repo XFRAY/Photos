@@ -1,7 +1,6 @@
 package com.itrexgroup.photos.ui.adapters.photos
 
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.itrexgroup.photos.R
@@ -10,8 +9,7 @@ import com.itrexgroup.photos.data.network.NetworkState
 import com.itrexgroup.photos.ui.base.adapter.NetworkStateViewHolder
 import com.itrexgroup.photos.utils.inflate
 
-class PhotosAdapter :
-    PagedListAdapter<Photo, RecyclerView.ViewHolder>(photosComparator) {
+class PhotosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
 
@@ -27,6 +25,12 @@ class PhotosAdapter :
         }
     }
 
+    var items: List<Photo> = listOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
     private var networkState: NetworkState? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -39,22 +43,22 @@ class PhotosAdapter :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            ITEM_PHOTO -> (holder as PhotosHolder).bindItem(getItem(position))
+            ITEM_PHOTO -> (holder as PhotosHolder).bindItem(items[position])
             ITEM_NETWORK_STATE -> (holder as NetworkStateViewHolder).bindItem(networkState)
         }
     }
 
     fun setNetworkState(networkState: NetworkState) {
-        if (!currentList.isNullOrEmpty()) {
+        if (!items.isNullOrEmpty()) {
             val previousState = this.networkState
             val hadExtraRow = hasExtraRow()
             this.networkState = networkState
             val hasExtraRow = hasExtraRow()
             if (hadExtraRow != hasExtraRow) {
                 if (hadExtraRow) {
-                    notifyItemRemoved(super.getItemCount())
+                    notifyItemRemoved(itemCount)
                 } else {
-                    notifyItemInserted(super.getItemCount())
+                    notifyItemInserted(itemCount)
                 }
             } else if (hasExtraRow && previousState !== networkState) {
                 notifyItemChanged(itemCount - 1)
@@ -75,7 +79,7 @@ class PhotosAdapter :
     }
 
     override fun getItemCount(): Int {
-        return super.getItemCount() + if (hasExtraRow()) 1 else 0
+        return items.size + if (hasExtraRow()) 1 else 0
     }
 
 }

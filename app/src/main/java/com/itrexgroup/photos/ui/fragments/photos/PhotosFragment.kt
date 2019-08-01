@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.itrexgroup.photos.ui.adapters.photos.PhotosAdapter
 import com.itrexgroup.photos.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_photos.*
@@ -32,6 +33,9 @@ class PhotosFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        if (savedInstanceState == null) {
+            viewModel.loadFirstPagePhotos()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -39,19 +43,33 @@ class PhotosFragment : BaseFragment() {
         val layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
+                    && firstVisibleItemPosition >= 0
+                    && totalItemCount >= 10
+                ) {
+                    viewModel.loadNextPagePhotosIfExists()
+                }
+            }
+        })
     }
 
     private fun observeViewModel() {
-        viewModel.initialLoadStateLiveData.observe(this, Observer {
+        viewModel.initialNetworkStateLiveData.observe(this, Observer {
             handleInitialLoadNetworkState(it)
         })
 
-        viewModel.paginationLoadStateLiveData.observe(this, Observer {
+        viewModel.paginationNetworkStateLiveData.observe(this, Observer {
             adapter.setNetworkState(it)
         })
 
         viewModel.listPhotosLiveData.observe(this, Observer {
-            adapter.submitList(it)
+            adapter.items = it
         })
     }
 

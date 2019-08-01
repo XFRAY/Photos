@@ -11,7 +11,7 @@ interface ApiInterface {
 
     @GET("/photos")
     @Headers("Authorization: Client-ID " + BuildConfig.UNSPLASH_CLIENT_ID)
-    fun loadPhotos(@Query("page") page: Long): Single<List<Photo>>
+    fun loadPhotos(@Query("page") page: Int): Single<List<Photo>>
 
     @POST("/oauth/token")
     @Headers("Authorization: Client-ID " + BuildConfig.UNSPLASH_CLIENT_ID)

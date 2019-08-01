@@ -1,43 +1,68 @@
 package com.itrexgroup.photos.ui.fragments.photos
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
 import com.itrexgroup.photos.data.database.entity.photos.Photo
-import com.itrexgroup.photos.data.repository.photos.PhotosDataSource
-import com.itrexgroup.photos.data.repository.photos.PhotosDataSourceFactory
+import com.itrexgroup.photos.data.network.NetworkState
+import com.itrexgroup.photos.data.repository.photos.PhotosRepository
 import com.itrexgroup.photos.ui.base.BaseViewModel
-import java.util.concurrent.Executors
+import io.reactivex.disposables.CompositeDisposable
 
 class PhotosViewModel(
     application: Application,
-    private val photosDataSourceFactory: PhotosDataSourceFactory
+    private val photosRepository: PhotosRepository
 ) : BaseViewModel(application) {
 
-    val listPhotosLiveData: LiveData<PagedList<Photo>>
+    private val compositeDisposable = CompositeDisposable()
 
-    private val dataSource = photosDataSourceFactory.getPhotosDataSource()
+    val listPhotosLiveData = MutableLiveData<List<Photo>>()
+    val paginationNetworkStateLiveData = MutableLiveData<NetworkState>()
+    val initialNetworkStateLiveData = MutableLiveData<NetworkState>()
 
-    val initialLoadStateLiveData = dataSource.initialLoadStateLiveData
-    val paginationLoadStateLiveData = dataSource.paginatedNetworkStateLiveData
 
-    init {
+    private val listOfPhotos = ArrayList<Photo>()
+    private var currentPage = 1
 
-        val pagedListConfig = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(10)
-            .setPageSize(10)
-            .build()
+    fun loadFirstPagePhotos() {
+        if (listOfPhotos.isNotEmpty()) {
+            listPhotosLiveData.value = listOfPhotos
+        }
+        initialNetworkStateLiveData.value = NetworkState.LOADING
+        compositeDisposable.add(
+            photosRepository.loadPhotos(currentPage)
+                .subscribe({
+                    listPhotosLiveData.value = it
+                    listOfPhotos.addAll(it)
+                    listPhotosLiveData.value = listOfPhotos
+                    initialNetworkStateLiveData.value = NetworkState.LOADED
+                    currentPage++
+                }, {
+                    initialNetworkStateLiveData.value = NetworkState.FAILED
+                })
+        )
+    }
 
-        listPhotosLiveData = LivePagedListBuilder(photosDataSourceFactory, pagedListConfig)
-            .build()
+    fun loadNextPagePhotosIfExists() {
+        if (paginationNetworkStateLiveData.value == NetworkState.LOADING) {
+            return
+        }
+        paginationNetworkStateLiveData.value = NetworkState.LOADING
+        compositeDisposable.add(
+            photosRepository.loadPhotos(currentPage)
+                .subscribe({
+                    listPhotosLiveData.value = it
+                    listOfPhotos.addAll(it)
+                    listPhotosLiveData.value = listOfPhotos
+                    paginationNetworkStateLiveData.value = NetworkState.LOADED
+                    currentPage++
+                }, {
+                    paginationNetworkStateLiveData.value = NetworkState.FAILED
+                })
+        )
     }
 
     override fun onCleared() {
         super.onCleared()
-
+        compositeDisposable.clear()
     }
 }

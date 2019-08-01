@@ -1,11 +1,12 @@
 package com.itrexgroup.photos.di
 
+import com.itrexgroup.photos.data.database.PhotosDatabase
 import com.itrexgroup.photos.data.network.*
 import com.itrexgroup.photos.data.repository.user.UserRepository
 import com.itrexgroup.photos.data.repository.user.UserRepositoryImpl
 import com.itrexgroup.photos.data.repository.PreferenceManager
-import com.itrexgroup.photos.data.repository.photos.PhotosDataSource
-import com.itrexgroup.photos.data.repository.photos.PhotosDataSourceFactory
+import com.itrexgroup.photos.data.repository.photos.PhotosRepository
+import com.itrexgroup.photos.data.repository.photos.PhotosRepositoryImpl
 import com.itrexgroup.photos.ui.activities.MainActivityViewModel
 import com.itrexgroup.photos.ui.fragments.login.LoginViewModel
 import com.itrexgroup.photos.ui.fragments.main.MainFlowViewModel
@@ -32,8 +33,7 @@ val viewModelModule = module {
 }
 
 val repositoryModule = module {
-    single { PhotosDataSourceFactory(get()) }
-    single { PhotosDataSource(get()) }
+    single<PhotosRepository> { PhotosRepositoryImpl(get(), get()) }
     single<UserRepository> { UserRepositoryImpl(get(), get(), get()) }
 }
 
@@ -42,5 +42,5 @@ val utilsModule = module {
 }
 
 val databaseModule = module {
-    //single { PhotosDatabase.createDatabase(get()) }
+    single { PhotosDatabase.createDatabase(get()) }
 }
