@@ -9,21 +9,21 @@ import java.util.*
 
 class ListPhotosTypeConverter {
 
-    val gson = Gson()
+
     @TypeConverter
-    fun stringListPhotos(data: String?): List<Photo> {
+    fun stringToListPhotos(data: String?): List<Photo> {
         if (data == null) {
             return Collections.emptyList()
         }
 
-        val listType = object : TypeToken<List<Photo>>() {
-        }.type
+        val listType = object : TypeToken<ArrayList<Photo>>() {
 
-        return gson.fromJson(data, listType)
+        }.type
+        return Gson().fromJson(data, listType)
     }
 
     @TypeConverter
-    fun listPhotosToString(someObjects: List<Photo>): String {
-        return gson.toJson(someObjects)
+    fun listPhotosToString(listPhotos: List<Photo>): String {
+        return Gson().toJson(listPhotos)
     }
 }

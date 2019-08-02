@@ -5,8 +5,8 @@ import com.itrexgroup.photos.data.database.entity.photos.Photo
 import com.itrexgroup.photos.data.database.entity.photos.PhotosPage
 import com.itrexgroup.photos.data.network.ApiInterface
 import io.reactivex.Single
+import io.reactivex.SingleSource
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.internal.operators.single.SingleJust
 import io.reactivex.schedulers.Schedulers
 
 class PhotosRepositoryImpl(
@@ -15,19 +15,17 @@ class PhotosRepositoryImpl(
 ) : PhotosRepository {
 
     override fun loadPhotos(page: Int): Single<List<Photo>> {
-
         val photosDao = photosDatabase.getPhotosDao()
-        val cachedPageLiveData = photosDao.getPhotosByPage(page)
-        return if (cachedPageLiveData.value == null) {
-            apiInterface.loadPhotos(page)
-                .doOnSuccess {
-                    insertIntoDatabase(PhotosPage(page, it))
-                }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-        } else {
-            Single.just(cachedPageLiveData.value!!.listPhotos)
-        }
+        return photosDao.getPhotosByPage(page)
+            .flatMap { photosPage ->
+                return@flatMap Single.just(photosPage.listPhotos)
+            }.onErrorResumeNext {
+                return@onErrorResumeNext
+
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
     }
 
     private fun insertIntoDatabase(photosPage: PhotosPage) {
