@@ -1,88 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content"
-                                   app:cardCornerRadius="6dp"
-                                   android:layout_margin="8dp"
-                                   app:cardElevation="8dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cnstrBackground"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:id="@+id/cnstrBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <View
-                android:id="@+id/gradient"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@color/colorBlackTransparent25"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+            android:id="@+id/gradient"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/colorBlackTransparent25"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgProfilePhoto"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+            android:id="@+id/imgProfilePhoto"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtAuthor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/colorWhite"
-                app:layout_constraintBottom_toBottomOf="@id/imgProfilePhoto"
-                app:layout_constraintStart_toEndOf="@id/imgProfilePhoto"
-                app:layout_constraintTop_toTopOf="@id/imgProfilePhoto"/>
+            android:id="@+id/txtAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="@id/imgProfilePhoto"
+            app:layout_constraintStart_toEndOf="@id/imgProfilePhoto"
+            app:layout_constraintTop_toTopOf="@id/imgProfilePhoto" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgPhoto"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imgProfilePhoto"/>
+            android:id="@+id/imgPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgProfilePhoto" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtLikes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:drawableStart="@drawable/ic_like_empty_black"
-                android:drawablePadding="12dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/colorWhite"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/txtCreatedAt"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imgPhoto"/>
+            android:id="@+id/txtLikes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:drawableStart="@drawable/ic_like_empty_black"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txtCreatedAt"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgPhoto" />
 
         <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtCreatedAt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:gravity="center_vertical|end"
-                android:textColor="@color/colorWhite"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/txtLikes"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/txtLikes"
-                app:layout_constraintTop_toTopOf="@+id/txtLikes"/>
+            android:id="@+id/txtCreatedAt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:gravity="center_vertical|end"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txtLikes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/txtLikes"
+            app:layout_constraintTop_toTopOf="@+id/txtLikes" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -17,7 +17,7 @@ interface PagePhotosDao {
     @Query("SELECT COUNT(page) FROM PhotosPage")
     fun getCountOfCachedPages(): Int
 
-    @Delete
-    fun delete(photo: PhotosPage)
+    @Query("DELETE FROM PhotosPage")
+    fun deleteAll()
 
 }

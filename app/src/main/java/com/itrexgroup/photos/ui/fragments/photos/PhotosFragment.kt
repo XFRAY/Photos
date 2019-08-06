@@ -5,12 +5,13 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.itrexgroup.photos.ui.adapters.photos.PhotosAdapter
-import com.itrexgroup.photos.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_photos.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.itrexgroup.photos.R
 import com.itrexgroup.photos.data.network.NetworkState
+import com.itrexgroup.photos.ui.adapters.photos.PhotosAdapter
+import com.itrexgroup.photos.ui.base.BaseFragment
+import com.itrexgroup.photos.utils.getColor
+import kotlinx.android.synthetic.main.fragment_photos.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class PhotosFragment : BaseFragment() {
@@ -33,13 +34,21 @@ class PhotosFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        setupSwipeRefresh()
         if (savedInstanceState == null) {
             viewModel.loadFirstPagePhotos()
         }
     }
 
+    private fun setupSwipeRefresh() {
+        swipeRefreshLayout.setColorSchemeColors(getColor(R.color.colorAccent))
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.refreshItems()
+        }
+    }
+
     private fun setupRecyclerView() {
-        adapter = PhotosAdapter()
+        adapter = PhotosAdapter(this::replaceWithTransition)
         val layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
@@ -50,8 +59,8 @@ class PhotosFragment : BaseFragment() {
                 val totalItemCount = layoutManager.itemCount
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
-                    && firstVisibleItemPosition >= 0
-                    && totalItemCount >= 10
+                        && firstVisibleItemPosition >= 0
+                        && totalItemCount >= adapter.items.size
                 ) {
                     viewModel.loadNextPagePhotosIfExists()
                 }
@@ -71,6 +80,28 @@ class PhotosFragment : BaseFragment() {
         viewModel.listPhotosLiveData.observe(this, Observer {
             adapter.items = it
         })
+
+        viewModel.refreshItemsLiveData.observe(this, Observer {
+            handleRefreshItemsNetworkState(it)
+        })
+    }
+
+
+    private fun replaceWithTransition(view: View) {
+    }
+
+    private fun handleRefreshItemsNetworkState(state: NetworkState) {
+        when (state) {
+            NetworkState.LOADED -> {
+                swipeRefreshLayout.isRefreshing = false
+            }
+            NetworkState.LOADING -> {
+                swipeRefreshLayout.isRefreshing = true
+            }
+            NetworkState.FAILED -> {
+                swipeRefreshLayout.isRefreshing = false
+            }
+        }
     }
 
     private fun handleInitialLoadNetworkState(networkState: NetworkState) {

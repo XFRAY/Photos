@@ -3,21 +3,18 @@ package com.itrexgroup.photos.ui.fragments.login
 import android.os.Bundle
 import android.view.View
 import com.itrexgroup.photos.R
-import com.itrexgroup.photos.utils.AnimationOptions
-import com.itrexgroup.photos.ui.base.BaseRouter
+import com.itrexgroup.photos.ui.base.BaseFlowFragment
 import com.itrexgroup.photos.ui.fragments.main.MainFlowFragment
-import com.itrexgroup.photos.ui.base.BaseFragment
-import com.itrexgroup.photos.ui.base.OnBackPressed
+import com.itrexgroup.photos.utils.AnimationOptions
 
-class LoginFlowFragment : BaseFragment(), BaseRouter, WelcomeFragmentParent, LoginFragmentParent,
-    OnBackPressed {
+class LoginFlowFragment : BaseFlowFragment(), WelcomeFragmentParent, LoginFragmentParent {
 
     companion object {
         const val TAG = "LOGIN_FLOW_FRAGMENT_TAG"
         fun newInstance() = LoginFlowFragment()
     }
 
-    override fun getLayoutResourceId() = R.layout.login_flow_fragment
+    override fun getLayoutResourceId() = R.layout.fragment_base_flow
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,62 +25,28 @@ class LoginFlowFragment : BaseFragment(), BaseRouter, WelcomeFragmentParent, Log
 
     override fun login() {
         val animationOptions =
-            AnimationOptions(
-                R.anim.slide_in_left,
-                R.anim.slide_out_right,
-                0,
-                R.anim.slide_out_right
-            )
+                AnimationOptions(
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right,
+                        0,
+                        R.anim.slide_out_right
+                )
         navigateTo(
-            LoginFragment.newInstance(),
-            LoginFragment.TAG, true, animationOptions
+                LoginFragment.newInstance(),
+                LoginFragment.TAG, true, animationOptions
         )
     }
 
-    override fun navigateTo(
-            fragment: BaseFragment,
-            tag: String,
-            addToBackStack: Boolean,
-            animationOptions: AnimationOptions?
-    ) {
-        val fragmentTransaction = childFragmentManager.beginTransaction()
-        animationOptions?.let {
-            fragmentTransaction.setCustomAnimations(
-                animationOptions.enterAnimation,
-                animationOptions.exitAnimation,
-                animationOptions.popEnterAnimation,
-                animationOptions.popExitAnimation
-            )
-        }
-        fragmentTransaction.replace(R.id.childFragmentContainer, fragment, tag)
-        if (addToBackStack) {
-            fragmentTransaction.addToBackStack(tag)
-        }
-        fragmentTransaction.commit()
-    }
 
     override fun userLogged() {
         router?.navigateTo(
-            MainFlowFragment.newInstance(),
-            MainFlowFragment.TAG, false, null
+                MainFlowFragment.newInstance(),
+                MainFlowFragment.TAG, false, null
         )
     }
 
     override fun userLoggedError() {
         showToast(getString(R.string.error_login_failed))
         back()
-    }
-
-    override fun back() {
-        router?.back()
-    }
-
-
-    override fun onBackPressed(): Boolean {
-        if (childFragmentManager.backStackEntryCount > 1) {
-            childFragmentManager.popBackStack()
-            return true
-        }
-        return false
     }
 }

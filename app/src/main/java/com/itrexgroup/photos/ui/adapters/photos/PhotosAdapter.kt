@@ -1,5 +1,6 @@
 package com.itrexgroup.photos.ui.adapters.photos
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +10,7 @@ import com.itrexgroup.photos.data.network.NetworkState
 import com.itrexgroup.photos.ui.base.adapter.NetworkStateViewHolder
 import com.itrexgroup.photos.utils.inflate
 
-class PhotosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PhotosAdapter(private val onItemClickListener:(view: View) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
 
@@ -18,10 +19,10 @@ class PhotosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         val photosComparator = object : DiffUtil.ItemCallback<Photo>() {
             override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean =
-                oldItem == newItem
+                    oldItem == newItem
 
             override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean =
-                oldItem.id == newItem.id
+                    oldItem.id == newItem.id
         }
     }
 
@@ -35,7 +36,7 @@ class PhotosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ITEM_PHOTO -> PhotosHolder(parent.inflate(R.layout.item_photo))
+            ITEM_PHOTO -> PhotosHolder(parent.inflate(R.layout.item_photo), onItemClickListener)
             ITEM_NETWORK_STATE -> NetworkStateViewHolder(parent.inflate(R.layout.item_network_state))
             else -> throw IllegalArgumentException("unknown view type")
         }

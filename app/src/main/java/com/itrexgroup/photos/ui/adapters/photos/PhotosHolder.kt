@@ -13,7 +13,8 @@ import com.itrexgroup.photos.R
 import com.itrexgroup.photos.data.database.entity.photos.Photo
 import com.itrexgroup.photos.utils.TimeUtils
 
-class PhotosHolder(view: View) : RecyclerView.ViewHolder(view) {
+class PhotosHolder(view: View,
+                   private val onItemClickListener: (view: View) -> Unit) : RecyclerView.ViewHolder(view) {
 
     private val cnstrBackground = view.findViewById<ConstraintLayout>(R.id.cnstrBackground)
     private val imgPhoto = view.findViewById<ImageView>(R.id.imgPhoto)
@@ -25,36 +26,40 @@ class PhotosHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun bindItem(item: Photo?) {
         item?.let {
+            imgPhoto.transitionName = cnstrBackground.context.getString(R.string.photo_transition) + adapterPosition
+            cnstrBackground.setOnClickListener {
+                onItemClickListener.invoke(imgPhoto)
+            }
             val photoUrl = item.urls
             val profileImage = item.author.profileImage
             val author = item.author.name
             cnstrBackground.setBackgroundColor(Color.parseColor(item.color))
 
             val photoRequestOptions = RequestOptions()
-                .centerCrop()
+                    .centerCrop()
             Glide.with(imgPhoto.context)
-                .load(photoUrl.full)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .thumbnail(
-                    Glide.with(imgPhoto.context)
-                        .load(photoUrl.thumb)
-                        .apply(photoRequestOptions)
-                )
-                .apply(photoRequestOptions)
-                .into(imgPhoto)
+                    .load(photoUrl.full)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .thumbnail(
+                            Glide.with(imgPhoto.context)
+                                    .load(photoUrl.thumb)
+                                    .apply(photoRequestOptions)
+                    )
+                    .apply(photoRequestOptions)
+                    .into(imgPhoto)
 
             val profilePhotoRequestOptions = RequestOptions().circleCrop()
 
             Glide.with(imgProfilePhoto.context)
-                .load(profileImage.large)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .thumbnail(
-                    Glide.with(imgProfilePhoto.context)
-                        .load(profileImage.small)
-                        .apply(profilePhotoRequestOptions)
-                )
-                .apply(profilePhotoRequestOptions)
-                .into(imgProfilePhoto)
+                    .load(profileImage.large)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .thumbnail(
+                            Glide.with(imgProfilePhoto.context)
+                                    .load(profileImage.small)
+                                    .apply(profilePhotoRequestOptions)
+                    )
+                    .apply(profilePhotoRequestOptions)
+                    .into(imgProfilePhoto)
 
             txtAuthor.text = author
             txtLikes.text = item.likes.toString()

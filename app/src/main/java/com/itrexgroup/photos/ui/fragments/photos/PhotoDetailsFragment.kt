@@ -1,4 +1,4 @@
-package com.itrexgroup.photos.ui.fragments
+package com.itrexgroup.photos.ui.fragments.photos
 
 import android.os.Bundle
 import android.view.View
@@ -6,6 +6,7 @@ import com.bumptech.glide.Glide
 import com.itrexgroup.photos.R
 import com.itrexgroup.photos.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_photo_details.*
+
 
 class PhotoDetailsFragment : BaseFragment() {
 
@@ -26,6 +27,7 @@ class PhotoDetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         imgPhoto.transitionName = arguments?.getString(PHOTO_TRANSITION_NAME_KEY)
         Glide.with(context!!)
                 .load(arguments?.getString(URL_KEY))

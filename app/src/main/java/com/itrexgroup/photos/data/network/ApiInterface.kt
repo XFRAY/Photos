@@ -26,4 +26,7 @@ interface ApiInterface {
     @GET("/me")
     fun getCurrentUser(@Header("Authorization") authorizationHeader: String): Single<User>
 
+    @GET("users/{username}")
+    fun getUserByUsername(@Path("username") username: String): Single<User>
+
 }

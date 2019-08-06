@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import com.itrexgroup.photos.R
 import com.itrexgroup.photos.data.database.entity.user.User
 import com.itrexgroup.photos.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.fragment_my_profile.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : BaseFragment() {
@@ -18,7 +18,7 @@ class ProfileFragment : BaseFragment() {
 
     private val viewModel: UserProfileViewModel by viewModel()
 
-    override fun getLayoutResourceId() = R.layout.fragment_profile
+    override fun getLayoutResourceId() = R.layout.fragment_my_profile
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

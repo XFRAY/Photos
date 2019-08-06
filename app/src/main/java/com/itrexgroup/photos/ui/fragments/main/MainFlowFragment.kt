@@ -7,6 +7,7 @@ import com.itrexgroup.photos.R
 import com.itrexgroup.photos.ui.base.BaseFragment
 import com.itrexgroup.photos.ui.base.OnBackPressed
 import com.itrexgroup.photos.ui.fragments.LikedPhotosFragment
+import com.itrexgroup.photos.ui.fragments.photos.PhotosFlowFragment
 import com.itrexgroup.photos.ui.fragments.photos.PhotosFragment
 import com.itrexgroup.photos.ui.fragments.profile.ProfileFragment
 import kotlinx.android.synthetic.main.fragment_main_flow.*
@@ -38,8 +39,8 @@ class MainFlowFragment : BaseFragment(), OnBackPressed {
             val tag: String
             when (it.itemId) {
                 R.id.photos -> {
-                    fragment = PhotosFragment.newInstance()
-                    tag = PhotosFragment.TAG
+                    fragment = PhotosFlowFragment.newInstance()
+                    tag = PhotosFlowFragment.TAG
                 }
 
                 R.id.likedPhotos -> {
